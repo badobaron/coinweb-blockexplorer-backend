@@ -27,7 +27,7 @@
                         </p>
                     </div>
                     <br>
-                    <a href="#" class="waves-effect waves-light btn black">go to all assets</a>
+                    <a href="{{ url_for('assets_all') }}" class="waves-effect waves-light btn black">go to all assets</a>
                 </div>
                 <!--Named Assets-->
                 <div class="col s12 m3 l3">
@@ -39,7 +39,7 @@
                         </p>
                     </div>
                     <br>
-                    <a href="#" class="waves-effect waves-light btn black">go to named assets</a>
+                    <a href="{{ url_for('assets_named') }}" class="waves-effect waves-light btn black">go to named assets</a>
                 </div>
                 <!--Subassets-->
                 <div class="col s12 m3 l3">
@@ -51,7 +51,7 @@
                         </p>
                     </div>
                     <br>
-                    <a href="#" class="waves-effect waves-light btn black">go to subassets</a>
+                    <a href="{{ url_for('assets_subassets') }}" class="waves-effect waves-light btn black">go to subassets</a>
                 </div>
                 <!--Numeric Assets-->
                 <div class="col s12 m3 l3">
@@ -63,7 +63,7 @@
                         </p>
                     </div>
                     <br>
-                    <a href="#" class="waves-effect waves-light btn black">go to numeric assets</a>
+                    <a href="{{ url_for('assets_numeric') }}" class="waves-effect waves-light btn black">go to numeric assets</a>
                 </div>
             </div>
 </div>
