@@ -30,5 +30,89 @@ def assets_subassets():
 def assets_numeric():
     return render_template('assets_numeric.html')
 
+# Bets category routing
+# TODO: add render method for bets template
+@app.route('/bets')
+def bets():
+    pass
+
+# Blocks category routing
+# TODO: add render method for blocks template
+@app.route('/blocks')
+def blocks():
+    pass
+
+# Broadcasts category routing
+# TODO: add render method for broadcasts template
+@app.route('/broadcasts')
+def broadcasts():
+    pass
+
+# Burns category routing
+# TODO: add render method for burns template
+@app.route('/burns')
+def burns():
+    pass
+
+# Dividends category routing
+# TODO: add render methods for dividends template
+@app.route('/dividends')
+def dividends():
+    pass
+
+# Issuances category routing
+# TODO: add render methods for issuances template
+@app.route('/issuances')
+def issuances():
+    pass
+
+# Markets category routing
+# TODO: add render methods for markets template
+@app.route('/markets')
+def markets():
+    pass
+
+# Mempool category routing
+# TODO: add render methods for mempool template
+@app.route('/mempool')
+def mempool():
+    pass
+
+# Orders category routing
+# TODO: add render methods for orders template
+@app.route('/orders')
+def orders():
+    pass
+
+# Sends category routing
+# TODO: add render methods for sends template
+@app.route('/sends')
+def sends():
+    pass
+
+# API category routing
+# TODO: add render methods for API template
+@app.route('/api')
+def api():
+    pass
+
+# Status category routing
+# TODO: add render methods for status template
+@app.route('/status')
+def status():
+    pass
+
+# Wallets category routing
+# TODO: add render methods for wallets template
+@app.route('/wallets')
+def wallets():
+    pass
+
+# About category routing
+# TODO: add render methods for about template
+@app.route('/about')
+def about():
+    pass
+
 if __name__ == '__main__':
     app.run()
