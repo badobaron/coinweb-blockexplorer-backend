@@ -1,0 +1,42 @@
+@media only screen and (max-width:600px) {
+    #img-logo {
+        max-width: 200px !important;
+        width: auto !important;
+    }
+}
+
+#img-logo {
+    margin-left: 5px;
+    max-width: 250px;
+    width: 95%;
+    margin-top: 1%;
+}
+
+#mobile-nav li:hover {
+    background-color: #eee
+}
+
+.sidenav .active #info-collapsible-list {
+    transform: rotate(180deg);
+}
+
+/* Assets Promo Styles */
+.center.promo {
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.promo i {
+    margin: 40px 0;
+    color: black;
+    font-size: 7rem;
+    display: block;
+}
+
+.promo-caption {
+    font-size: 1.7rem;
+    font-weight: 500;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
