@@ -1,6 +1,5 @@
 # Flask basic imports for usage routing & rendering features
 from flask import Flask, render_template
-
 # Registering our app
 app = Flask(__name__)
 
