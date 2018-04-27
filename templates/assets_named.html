@@ -53,4 +53,36 @@
             </div>
         </div>
     </div>
+
+<script>
+String.prototype.format = function () {
+        var args = [].slice.call(arguments);
+        return this.replace(/(\{\d+\})/g, function (a){
+            return args[+(a.substr(1,a.length-2))||0];
+        });
+};
+
+    $.ajax({
+        url:'/assetsNamed',
+        data: {},
+        type: 'POST',
+        contentType: 'application/json;charset=UTF-8',
+        data:JSON.stringify({'per_page':10},null,'\t'),
+        success: function(response) {
+            console.log(response)
+            console.log(response['assert_name'])
+            response=JSON.parse(response);
+            console.log(response)
+            var default_string="<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td>";
+            response.forEach(function(asset,i,response){
+                $("#assets").find('tbody')
+                    .append($('<tr>')
+                        .append(default_string.format(i+1,asset['asset'],asset['description'],(asset['supply']/100000000).toFixed(9),asset['divisible'],asset['locked']))
+                    );
+            })
+        }
+    })
+
+</script>
+
 {% endblock %}

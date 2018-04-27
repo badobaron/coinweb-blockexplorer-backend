@@ -1,7 +1,8 @@
 # Flask basic imports for usage routing & rendering features
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
-import core.assets as core
+import core.assets as core_assets
+import core.bets as core_bets
 
 # Registering our app
 app = Flask(__name__)
@@ -40,10 +41,9 @@ def assets_numeric():
 
 
 # Bets category routing
-# TODO: add render method for bets template
 @app.route('/bets')
 def bets():
-    pass
+    return render_template('bets.html')
 
 
 # Blocks category routing
@@ -139,9 +139,26 @@ def about():
 
 ##################
 # Requests handlers
+##################
+# ASSETS
+# All assets
 @app.route('/assetsAll', methods=['POST'])
 def assets_all_get_info():
-    return core.get_assets()
+    page = request.json['per_page']
+    # Average time 3.7 sec
+    return core_assets.get_assets()
+
+
+# Named assets
+@app.route('/assetsNamed', methods=['POST'])
+def assets_named_get_info():
+    pass
+
+
+# BETS
+@app.route('/betsAll', methods=['POST'])
+def bets_all_get_info():
+    return core_bets.get_bets()
 
 
 if __name__ == '__main__':

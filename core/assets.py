@@ -6,13 +6,13 @@ from core.connection import URL, HEADERS, AUTH
 
 
 # Get all assets list
-def get_assets_names(count, offset):
+def get_assets_names(quantity_of_assets=10, offset=3):
     """
-    Get names of assets.
+    Get names of assets. Used only in get_assets() function.
 
-    :param count: number of assets
+    :param quantity_of_assets: quantity of assets
     :param offset: offset for the list of assets
-    :type count: int
+    :type quantity_of_assets: int
     :type offset: int
     :return assets: list of assets names
     :rtype assets: list
@@ -23,7 +23,7 @@ def get_assets_names(count, offset):
                "jsonrpc": "2.0",
                "id": 0
                }
-    payload['params'] = {'order_by': 'asset_id', 'limit': count, 'offset': offset}
+    payload['params'] = {'order_by': 'asset_id', 'limit': quantity_of_assets, 'offset': offset}
     response = requests.post(URL, data=json.dumps(payload), headers=HEADERS, auth=AUTH)
     data = json.loads(response.text)
 
@@ -37,13 +37,13 @@ def get_assets_names(count, offset):
     return assets_names
 
 
-def get_assets(count=10, offset=3):
+def get_assets(quantity_of_assets=10, offset=3):
     """
-    Get info about assets. Offset is equals 3 to exclude BTC,XCP,FTPT assets
+    Get info about assets. Offset is equals 3 to exclude BTC,XCP,FRYE assets
 
-    :param count: number of assets
+    :param quantity_of_assets: quantity of assets
     :param offset: offset for the list of
-    :type count: int
+    :type quantity_of_assets: int
     :type offset: int
     :return data: JSON string which includes: asset (string): The assets of the asset itself
                                               asset_longname (string): The subasset longname, if any
@@ -55,7 +55,7 @@ def get_assets(count=10, offset=3):
                                               issuer (string): The asset’s original owner (i.e. issuer)
     :rtype data: JSON
     """
-    list_of_assets_names = get_assets_names(count, offset)
+    list_of_assets_names = get_assets_names(quantity_of_assets, offset)
     payload = {"method": "get_asset_info",
                "params": {},
                "jsonrpc": "2.0",
