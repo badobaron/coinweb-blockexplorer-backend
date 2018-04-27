@@ -145,14 +145,29 @@ def about():
 @app.route('/assetsAll', methods=['POST'])
 def assets_all_get_info():
     page = request.json['per_page']
-    # Average time 3.7 sec
-    return core_assets.get_assets()
+    # Average time 17.5 sec!!! Very slow
+    return core_assets.get_all_assets()
 
 
 # Named assets
 @app.route('/assetsNamed', methods=['POST'])
 def assets_named_get_info():
+    # Average time 17.5 sec!!! Very slow
+    return core_assets.get_named_assets()
+
+
+# Subassets
+# TODO: add get_info function for subassets
+@app.route('/assetsSub', methods=['POST'])
+def assets_sub_get_info():
     pass
+
+
+# Numeric assets
+@app.route('/assetsNumeric', methods=['POST'])
+def assets_numeric_get_info():
+    # Average time 17.5 sec!!! Very slow
+    return core_assets.get_numeric_assets()
 
 
 # BETS

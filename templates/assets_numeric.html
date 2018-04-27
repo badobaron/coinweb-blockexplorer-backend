@@ -24,7 +24,7 @@
                         </h5>
                     </li>
                     <li class="collection-item">
-                        <table class="highlight">
+                        <table class="highlight" id="numeric_assets">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -53,4 +53,36 @@
             </div>
         </div>
     </div>
+
+<script>
+//add .format function
+String.prototype.format = function () {
+        var args = [].slice.call(arguments);
+        return this.replace(/(\{\d+\})/g, function (a){
+            return args[+(a.substr(1,a.length-2))||0];
+        });
+};
+
+
+var per_page=10;
+//request to the server
+    $.ajax({
+        url:'/assetsNumeric',
+        type: 'POST',
+        contentType: 'application/json;charset=UTF-8',
+        data:JSON.stringify({'per_page':10},null,'\t'),
+        success: function(response) {
+            response=JSON.parse(response);
+            var default_string="<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td>";
+            var my_table=$("#numeric_assets").find('tbody')
+            response.slice(0,per_page).forEach(function(asset,i,response){
+                    my_table.append($('<tr>')
+                        .append(default_string.format(i+1,asset['asset'],asset['description'],(asset['supply']/100000000).toFixed(9),asset['divisible'],asset['locked']))
+                    );
+            })
+        }
+    })
+
+</script>
+
 {% endblock %}
