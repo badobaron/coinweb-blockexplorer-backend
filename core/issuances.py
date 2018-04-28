@@ -5,20 +5,20 @@ import requests
 from core.connection import URL, HEADERS, AUTH
 
 
-# Todo: understand how to calculate dividends time
-def get_dividends(quantity_of_bets=10, offset=0):
+# Todo: understand how to calculate issuances time
+def get_issuances(quantity_of_bets=10, offset=0):
     """
-    Get info about dividends
+    Get info about issuances
 
-    :param quantity_of_bets: quantity of dividends
-    :param offset: offset for the list of dividends
+    :param quantity_of_bets: quantity of issuances
+    :param offset: offset for the list of issuances
     :type quantity_of_bets: int
     :type offset: int
-    :return assets: list of dividends
+    :return assets: list of issuances
     :rtype assets: list
     """
     # Preparing data
-    payload = {"method": "get_dividends",
+    payload = {"method": "get_issuances",
                "params": {},
                "jsonrpc": "2.0",
                "id": 0

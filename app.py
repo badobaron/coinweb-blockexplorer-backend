@@ -6,7 +6,7 @@ import core.bets as core_bets
 import core.broadcasts as core_broadcasts
 import core.burns as core_burns
 import core.dividends as core_dividends
-
+import core.issuances as core_issuances
 
 # Registering our app
 app = Flask(__name__)
@@ -76,10 +76,9 @@ def dividends():
 
 
 # Issuances category routing
-# TODO: add render methods for issuances template
 @app.route('/issuances')
 def issuances():
-    pass
+    return render_template('issuances.html')
 
 
 # Markets category routing
@@ -200,6 +199,12 @@ def burns_all_get_info():
 @app.route('/dividendsAll', methods=['POST'])
 def dividends_all_get_info():
     return core_dividends.get_dividends()
+
+
+# ISSUANCES
+@app.route('/issuancesAll', methods=['POST'])
+def issuances_all_get_info():
+    return core_issuances.get_issuances()
 
 
 if __name__ == '__main__':
