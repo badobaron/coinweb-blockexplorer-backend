@@ -6,19 +6,19 @@ from core.connection import URL, HEADERS, AUTH
 
 
 # Todo: understand how to calculate burn time
-def get_burns(quantity_of_bets=10, offset=0):
+def get_dividends(quantity_of_bets=10, offset=0):
     """
-    Get info about burns
+    Get info about dividends
 
-    :param quantity_of_bets: quantity of burns
-    :param offset: offset for the list of burns
+    :param quantity_of_bets: quantity of dividends
+    :param offset: offset for the list of dividends
     :type quantity_of_bets: int
     :type offset: int
-    :return assets: list of burns
+    :return assets: list of dividends
     :rtype assets: list
     """
     # Preparing data
-    payload = {"method": "get_burns",
+    payload = {"method": "get_dividends",
                "params": {},
                "jsonrpc": "2.0",
                "id": 0

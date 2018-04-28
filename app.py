@@ -5,6 +5,8 @@ import core.assets as core_assets
 import core.bets as core_bets
 import core.broadcasts as core_broadcasts
 import core.burns as core_burns
+import core.dividends as core_dividends
+
 
 # Registering our app
 app = Flask(__name__)
@@ -68,10 +70,9 @@ def burns():
 
 
 # Dividends category routing
-# TODO: add render methods for dividends template
 @app.route('/dividends')
 def dividends():
-    pass
+    return render_template('dividends.html')
 
 
 # Issuances category routing
@@ -188,10 +189,18 @@ def blocks_all_get_info():
 def broadcasts_all_get_info():
     return core_broadcasts.get_broadcasts()
 
-#BURNS
+
+# BURNS
 @app.route('/burnsAll', methods=['POST'])
 def burns_all_get_info():
     return core_burns.get_burns()
+
+
+# DIVIDENDS
+@app.route('/dividendsAll', methods=['POST'])
+def dividends_all_get_info():
+    return core_dividends.get_dividends()
+
 
 if __name__ == '__main__':
     app.run()

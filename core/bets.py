@@ -7,7 +7,7 @@ from dateutil.relativedelta import relativedelta
 from core.connection import URL, HEADERS, AUTH
 
 
-# Todo: undertand how to calculate bet time
+# Todo: understand how to calculate bet time
 def get_bets(quantity_of_bets=10, offset=0):
     """
     Get info about bets
