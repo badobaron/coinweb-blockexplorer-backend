@@ -1,16 +1,16 @@
 {% extends 'template.html' %}
 
 {% block title %}
-<title>Bets :: Coinweb Block Explorer</title>
+<title>Broadcasts :: Coinweb Block Explorer</title>
 {% endblock %}
 
 {% block main %}
 <div class="container">
     <div class="row center">
         <div class="col s12">
-            <h1 class="header">Bets</h1>
+            <h1 class="header">Broadcasts</h1>
         </div>
-        <!--Bets-->
+        <!--Broadcasts-->
         <div class="col s12">
             <ul class="collection with-header">
                 <li class="collection-header">
@@ -21,7 +21,7 @@
                     </h5>
                 </li>
                 <li class="collection-item">
-                    <table class="highlight" id="bets">
+                    <table class="highlight" id="broadcasts">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -64,7 +64,7 @@ String.prototype.format = function () {
 var per_page=10;
 //request to the server
     $.ajax({
-        url:'/betsAll',
+        url:'/broadcastsAll',
         type: 'POST',
         contentType: 'application/json;charset=UTF-8',
         data:JSON.stringify({'per_page':10},null,'\t'),
@@ -72,10 +72,10 @@ var per_page=10;
             response=JSON.parse(response);
             console.log(response);
             var default_string="<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td>";
-            var my_table=$("#bets").find('tbody')
-            response.slice(0,per_page).forEach(function(bet,i,response){
+            var my_table=$("#broadcasts").find('tbody')
+            response.slice(0,per_page).forEach(function(broadcast,i,response){
                     my_table.append($('<tr>')
-                        .append(default_string.format(i+1,bet['block_index'],'?',bet['source'],bet['feed_address'],(bet['fee_fraction_int']/1000000).toFixed(2)+'%'))
+                        .append(default_string.format(i+1,broadcast['block_index'],broadcast['time'],broadcast['source'],broadcast['text'],(broadcast['fee_fraction_int']/1000000).toFixed(2)+'%'))
                     );
             })
         }

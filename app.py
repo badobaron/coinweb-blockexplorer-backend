@@ -3,6 +3,7 @@ from flask import Flask, render_template, request
 
 import core.assets as core_assets
 import core.bets as core_bets
+import core.broadcasts as core_broadcasts
 
 # Registering our app
 app = Flask(__name__)
@@ -54,10 +55,9 @@ def blocks():
 
 
 # Broadcasts category routing
-# TODO: add render method for broadcasts template
 @app.route('/broadcasts')
 def broadcasts():
-    pass
+    return render_template('broadcasts.html')
 
 
 # Burns category routing
@@ -174,6 +174,19 @@ def assets_numeric_get_info():
 @app.route('/betsAll', methods=['POST'])
 def bets_all_get_info():
     return core_bets.get_bets()
+
+
+# BLOCKS
+# TODO: add get_info function for blocks
+@app.route('/blocksAll', methods=['POST'])
+def blocks_all_get_info():
+    pass
+
+
+# BROADCASTS
+@app.route('/broadcastsAll', methods=['POST'])
+def broadcasts_all_get_info():
+    return core_broadcasts.get_broadcasts()
 
 
 if __name__ == '__main__':
