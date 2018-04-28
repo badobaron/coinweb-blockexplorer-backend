@@ -1,14 +1,14 @@
 {% extends 'template.html' %}
 
 {% block title %}
-<title>Broadcasts :: Coinweb Block Explorer</title>
+<title>Burns :: Coinweb Block Explorer</title>
 {% endblock %}
 
 {% block main %}
 <div class="container">
     <div class="row center">
         <div class="col s12">
-            <h1 class="header">Broadcasts</h1>
+            <h1 class="header">Burns</h1>
         </div>
         <!--Broadcasts-->
         <div class="col s12">
@@ -16,21 +16,20 @@
                 <li class="collection-header">
                     <h5>
                         <i class="material-icons left">storage</i>
-                        Broadcasts
+                        Burns
                         <span class="badge">72,000 results</span>
                     </h5>
                 </li>
                 <li class="collection-item">
-                    <table class="highlight" id="broadcasts">
+                    <table class="highlight" id="burns">
                         <thead>
                         <tr>
                             <th>#</th>
                             <th>Block</th>
                             <th>Time</th>
                             <th>Source</th>
-                            <th>Message</th>
-                            <th>Value</th>
-                            <th>Fee</th>
+                            <th>BTC Burned</th>
+                            <th>XCP Earned</th>
                         </tr>
                         </thead>
                         <tbody></tbody>
@@ -61,27 +60,21 @@ String.prototype.format = function () {
         });
 };
 
-//add function which shorten str and change end of str with ...
-String.prototype.trunc = String.prototype.trunc ||
-      function(n){
-          return (this.length > n) ? this.substr(0, n-1) + '&hellip;' : this;
-      };
-
 
 var per_page=10;
 //request to the server
     $.ajax({
-        url:'/broadcastsAll',
+        url:'/burnsAll',
         type: 'POST',
         contentType: 'application/json;charset=UTF-8',
         data:JSON.stringify({'per_page':10},null,'\t'),
         success: function(response) {
             response=JSON.parse(response);
             var default_string="<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td>";
-            var my_table=$("#broadcasts").find('tbody')
-            response.slice(0,per_page).forEach(function(broadcast,i,response){
+            var my_table=$("#burns").find('tbody')
+            response.slice(0,per_page).forEach(function(burn,i,response){
                     my_table.append($('<tr>')
-                        .append(default_string.format(i+1,broadcast['block_index'],broadcast['time'],broadcast['source'],broadcast['text'].trunc(39),broadcast['value'],(broadcast['fee_fraction_int']/1000000).toFixed(2)+'%'))
+                        .append(default_string.format(i+1,burn['block_index'],'?',burn['source'],(burn['burned']/100000000).toFixed(9),(burn['earned']/100000000).toFixed(9)))
                     );
             })
         }

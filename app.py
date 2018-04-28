@@ -4,6 +4,7 @@ from flask import Flask, render_template, request
 import core.assets as core_assets
 import core.bets as core_bets
 import core.broadcasts as core_broadcasts
+import core.burns as core_burns
 
 # Registering our app
 app = Flask(__name__)
@@ -61,10 +62,9 @@ def broadcasts():
 
 
 # Burns category routing
-# TODO: add render method for burns template
 @app.route('/burns')
 def burns():
-    pass
+    return render_template('burns.html')
 
 
 # Dividends category routing
@@ -188,6 +188,10 @@ def blocks_all_get_info():
 def broadcasts_all_get_info():
     return core_broadcasts.get_broadcasts()
 
+#BURNS
+@app.route('/burnsAll', methods=['POST'])
+def burns_all_get_info():
+    return core_burns.get_burns()
 
 if __name__ == '__main__':
     app.run()
