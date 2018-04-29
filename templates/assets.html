@@ -1,70 +1,71 @@
 {% extends 'template.html' %}
 
 {% block title %}
-    <title>Assets :: Coinweb Block Explorer</title>
+<title>Assets :: Coinweb Block Explorer</title>
 {% endblock %}
 
 <!--TODO: add routed links-->
 
 {% block main %}
-    <div class="container">
-            <div class="row center">
-                <div class="col s12">
-                    <h1 class="header">Assets</h1>
-                </div>
-                <div class="col s12">
-                    <h5 class="light">Choose required assets list:</h5>
-                    <br>
-                    <br>
-                </div>
-                <!--All Assets-->
-                <div class="col s12 m3 l3">
-                    <div class="center promo">
-                        <i class="material-icons">storage</i>
-                        <p class="promo-caption">All Assets</p>
-                        <p class="light center">
-                            View all assets, composed in a table
-                        </p>
-                    </div>
-                    <br>
-                    <a href="{{ url_for('assets_all') }}" class="waves-effect waves-light btn black">go to all assets</a>
-                </div>
-                <!--Named Assets-->
-                <div class="col s12 m3 l3">
-                    <div class="center promo">
-                        <i class="material-icons">sort_by_alpha</i>
-                        <p class="promo-caption">Named Assets</p>
-                        <p class="light center">
-                            View all named assets, composed in a table
-                        </p>
-                    </div>
-                    <br>
-                    <a href="{{ url_for('assets_named') }}" class="waves-effect waves-light btn black">go to named assets</a>
-                </div>
-                <!--Subassets-->
-                <div class="col s12 m3 l3">
-                    <div class="center promo">
-                        <i class="material-icons">description</i>
-                        <p class="promo-caption">Subassets</p>
-                        <p class="light center">
-                            View all subassets, composed in a table
-                        </p>
-                    </div>
-                    <br>
-                    <a href="{{ url_for('assets_subassets') }}" class="waves-effect waves-light btn black">go to subassets</a>
-                </div>
-                <!--Numeric Assets-->
-                <div class="col s12 m3 l3">
-                    <div class="center promo">
-                        <i class="material-icons">format_list_numbered</i>
-                        <p class="promo-caption">Numeric Assets</p>
-                        <p class="light center">
-                            View all numbered assets, composed in a table
-                        </p>
-                    </div>
-                    <br>
-                    <a href="{{ url_for('assets_numeric') }}" class="waves-effect waves-light btn black">go to numeric assets</a>
-                </div>
+<div class="container">
+    <div class="row center">
+        <div class="col s12">
+            <h1 class="header">Assets</h1>
+        </div>
+        <div class="col s12">
+            <h5 class="light">Choose required assets list:</h5>
+            <br>
+            <br>
+        </div>
+        <!--All Assets-->
+        <div class="col s12 m3 l3">
+            <div class="center promo">
+                <i class="material-icons">storage</i>
+                <p class="promo-caption">All Assets</p>
+                <p class="light center">
+                    View all assets, composed in a table
+                </p>
             </div>
+            <br>
+            <a href="{{ url_for('assets_all') }}" class="waves-effect waves-light btn black">go to all assets</a>
+        </div>
+        <!--Named Assets-->
+        <div class="col s12 m3 l3">
+            <div class="center promo">
+                <i class="material-icons">sort_by_alpha</i>
+                <p class="promo-caption">Named Assets</p>
+                <p class="light center">
+                    View all named assets, composed in a table
+                </p>
+            </div>
+            <br>
+            <a href="{{ url_for('assets_named') }}" class="waves-effect waves-light btn black">go to named assets</a>
+        </div>
+        <!--Subassets-->
+        <div class="col s12 m3 l3">
+            <div class="center promo">
+                <i class="material-icons">description</i>
+                <p class="promo-caption">Subassets</p>
+                <p class="light center">
+                    View all subassets, composed in a table
+                </p>
+            </div>
+            <br>
+            <a href="{{ url_for('assets_subassets') }}" class="waves-effect waves-light btn black">go to subassets</a>
+        </div>
+        <!--Numeric Assets-->
+        <div class="col s12 m3 l3">
+            <div class="center promo">
+                <i class="material-icons">format_list_numbered</i>
+                <p class="promo-caption">Numeric Assets</p>
+                <p class="light center">
+                    View all numbered assets, composed in a table
+                </p>
+            </div>
+            <br>
+            <a href="{{ url_for('assets_numeric') }}" class="waves-effect waves-light btn black">go to numeric
+                assets</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

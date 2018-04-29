@@ -1,84 +1,84 @@
 {% extends 'template.html' %}
 
 {% block title %}
-    <title>Numeric Assets :: Coinweb Block Explorer</title>
+<title>Numeric Assets :: Coinweb Block Explorer</title>
 {% endblock %}
 
 {% block main %}
-    <div class="container">
-        <div class="row center">
-            <div class="col s12">
-                <h1 class="header">Numeric Assets</h1>
-            </div>
-            <a href="{{ url_for('assets') }}" class="waves-effect waves-light btn black">back to assets choice</a>
-            <br>
-            <br>
-            <!--Numeric Assets-->
-            <div class="col s12">
-                <ul class="collection with-header">
-                    <li class="collection-header">
-                        <h5>
-                            <i class="material-icons left">format_list_numbered</i>
-                            Numeric Assets
-                            <span class="badge">72,000 results</span>
-                        </h5>
-                    </li>
-                    <li class="collection-item">
-                        <table class="highlight" id="numeric_assets">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Asset</th>
-                                <th>Asset Description</th>
-                                <th>Total Supply</th>
-                                <th>Divisible</th>
-                                <th>Locked</th>
-                            </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </li>
-                    <li class="collection-item">
-                        <ul class="pagination center-align">
-                            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                            <li class="active"><a href="#!">1</a></li>
-                            <li class="waves-effect"><a href="#!">2</a></li>
-                            <li class="waves-effect"><a href="#!">3</a></li>
-                            <li class="waves-effect"><a href="#!">4</a></li>
-                            <li class="waves-effect"><a href="#!">5</a></li>
-                            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+<div class="container">
+    <div class="row center">
+        <div class="col s12">
+            <h1 class="header">Numeric Assets</h1>
+        </div>
+        <a href="{{ url_for('assets') }}" class="waves-effect waves-light btn black">back to assets choice</a>
+        <br>
+        <br>
+        <!--Numeric Assets-->
+        <div class="col s12">
+            <ul class="collection with-header">
+                <li class="collection-header">
+                    <h5>
+                        <i class="material-icons left">format_list_numbered</i>
+                        Numeric Assets
+                        <span class="badge">72,000 results</span>
+                    </h5>
+                </li>
+                <li class="collection-item">
+                    <table class="highlight" id="numeric_assets">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Asset</th>
+                            <th>Asset Description</th>
+                            <th>Total Supply</th>
+                            <th>Divisible</th>
+                            <th>Locked</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </li>
+                <li class="collection-item">
+                    <ul class="pagination center-align">
+                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                        <li class="active"><a href="#!">1</a></li>
+                        <li class="waves-effect"><a href="#!">2</a></li>
+                        <li class="waves-effect"><a href="#!">3</a></li>
+                        <li class="waves-effect"><a href="#!">4</a></li>
+                        <li class="waves-effect"><a href="#!">5</a></li>
+                        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
+</div>
 
 <script>
-//add .format function
-String.prototype.format = function () {
+    //add .format function
+    String.prototype.format = function () {
         var args = [].slice.call(arguments);
-        return this.replace(/(\{\d+\})/g, function (a){
-            return args[+(a.substr(1,a.length-2))||0];
+        return this.replace(/(\{\d+\})/g, function (a) {
+            return args[+(a.substr(1, a.length - 2)) || 0];
         });
-};
+    };
 
 
-var per_page=10;
-//request to the server
+    var per_page = 10;
+    //request to the server
     $.ajax({
-        url:'/assetsNumeric',
+        url: '/assetsNumeric',
         type: 'POST',
         contentType: 'application/json;charset=UTF-8',
-        data:JSON.stringify({'per_page':10},null,'\t'),
-        success: function(response) {
-            response=JSON.parse(response);
-            var default_string="<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td>";
-            var my_table=$("#numeric_assets").find('tbody')
-            response.slice(0,per_page).forEach(function(asset,i,response){
-                    my_table.append($('<tr>')
-                        .append(default_string.format(i+1,asset['asset'],asset['description'],(asset['supply']/100000000).toFixed(9),asset['divisible'],asset['locked']))
-                    );
+        data: JSON.stringify({'per_page': 10}, null, '\t'),
+        success: function (response) {
+            response = JSON.parse(response);
+            var default_string = "<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td>";
+            var my_table = $("#numeric_assets").find('tbody')
+            response.slice(0, per_page).forEach(function (asset, i, response) {
+                my_table.append($('<tr>')
+                    .append(default_string.format(i + 1, asset['asset'], asset['description'], (asset['supply'] / 100000000).toFixed(9), asset['divisible'], asset['locked']))
+                );
             })
         }
     })

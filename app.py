@@ -7,6 +7,7 @@ import core.broadcasts as core_broadcasts
 import core.burns as core_burns
 import core.dividends as core_dividends
 import core.issuances as core_issuances
+import core.mempool as core_mempool
 
 # Registering our app
 app = Flask(__name__)
@@ -89,10 +90,9 @@ def markets():
 
 
 # Mempool category routing
-# TODO: add render methods for mempool template
 @app.route('/mempool')
 def mempool():
-    pass
+    return render_template('/mempool.html')
 
 
 # Orders category routing
@@ -205,6 +205,12 @@ def dividends_all_get_info():
 @app.route('/issuancesAll', methods=['POST'])
 def issuances_all_get_info():
     return core_issuances.get_issuances()
+
+
+# MEMPOOL
+@app.route('/mempoolAll', methods=['POST'])
+def mempool_all_get_info():
+    return core_mempool.get_mempool()
 
 
 if __name__ == '__main__':

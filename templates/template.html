@@ -1,169 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!--Import Google Icon Font-->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}" media="screen,projection"/>
-        <!--Custom style-->
-        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-        <!--Favicon-->
-        <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/png" />
-        <!--Charset Setting-->
-        <meta charset="UTF-8">
-        <!--Let browser know website is optimized for mobile-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <!--JQuery-->
-        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
-        <!--Title Setting-->
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}"
+          media="screen,projection"/>
+    <!--Custom style-->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!--Favicon-->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/png"/>
+    <!--Charset Setting-->
+    <meta charset="UTF-8">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!--JQuery-->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    <!--Title Setting-->
 
-        {% block title %}{% endblock %}
-    </head>
+    {% block title %}{% endblock %}
+</head>
 <body>
-    <!--Header Section-->
-    <header>
-        <!--Navigation dropdowns section-->
-        <!--Information dropdown-->
-        <ul id="data-dropdown-data" class="dropdown-content black">
-            <!--Assets-->
-            <li>
-                <a href="#" class="white-text"><i class="material-icons left">storage</i>Assets</a>
-            </li>
-            <!--Bets-->
-            <li>
-                <a href="#" class="white-text"><i class="material-icons left">star_rate</i>Bets</a>
-            </li>
-            <!--Blocks-->
-            <li>
-                <a href="#" class="white-text"><i class="material-icons left">link</i>Blocks</a>
-            </li>
-            <!--Broadcasts-->
-            <li>
-                <a href="#" class="white-text"><i class="material-icons left">language</i>Broadcasts</a>
-            </li>
-            <!--Burns-->
-            <li>
-                <a href="#" class="white-text"><i class="material-icons left">whatshot</i>Burns</a>
-            </li>
-            <!--Dividends-->
-            <li>
-                <a href="#" class="white-text"><i class="material-icons left">description</i>Dividends</a>
-            </li>
-            <!--Issuances-->
-            <li>
-                <a href="#" class="white-text"><i class="material-icons left">receipt</i>Issuances</a>
-            </li>
-            <!--Markets-->
-            <li>
-                <a href="#" class="white-text"><i class="material-icons left">import_export</i>Markets</a>
-            </li>
-            <!--Mempool-->
-            <li>
-                <a href="#" class="white-text"><i class="material-icons left">access_time</i>Mempool</a>
-            </li>
-            <!--Orders-->
-            <li>
-                <a href="#" class="white-text"><i class="material-icons left">library_books</i>Orders</a>
-            </li>
-            <!--Sends-->
-            <li>
-                <a href="#" class="white-text"><i class="material-icons left">send</i>Sends</a>
-            </li>
-        </ul>
-        <!--Navigation bar section-->
-        <nav class="black">
-            <div class="nav-wrapper">
-                <a href="#!" class="brand-logo">
-                    <picture>
-                        <img id="img-logo" src="{{ url_for('static', filename='img/coinweb-logo-small.svg') }}">
-                    </picture>
-                </a>
-                <a href="#" data-target="mobile-nav" class="sidenav-trigger">
-                    <i class="material-icons">menu</i>
-                </a>
-                <ul class="right hide-on-med-and-down navbar-content">
-                    <!--Information-->
-                    <li>
-                        <a href="#!" class="dropdown-trigger" data-target="data-dropdown-data"><i class="material-icons left white-text">data_usage</i>Information<i class="material-icons right white-text">arrow_drop_down</i></a>
+<!--Header Section-->
+<header>
+    <!--Navigation dropdowns section-->
+    <!--Information dropdown-->
+    <ul id="data-dropdown-data" class="dropdown-content black">
+        <!--Assets-->
+        <li>
+            <a href="#" class="white-text"><i class="material-icons left">storage</i>Assets</a>
+        </li>
+        <!--Bets-->
+        <li>
+            <a href="#" class="white-text"><i class="material-icons left">star_rate</i>Bets</a>
+        </li>
+        <!--Blocks-->
+        <li>
+            <a href="#" class="white-text"><i class="material-icons left">link</i>Blocks</a>
+        </li>
+        <!--Broadcasts-->
+        <li>
+            <a href="#" class="white-text"><i class="material-icons left">language</i>Broadcasts</a>
+        </li>
+        <!--Burns-->
+        <li>
+            <a href="#" class="white-text"><i class="material-icons left">whatshot</i>Burns</a>
+        </li>
+        <!--Dividends-->
+        <li>
+            <a href="#" class="white-text"><i class="material-icons left">description</i>Dividends</a>
+        </li>
+        <!--Issuances-->
+        <li>
+            <a href="#" class="white-text"><i class="material-icons left">receipt</i>Issuances</a>
+        </li>
+        <!--Markets-->
+        <li>
+            <a href="#" class="white-text"><i class="material-icons left">import_export</i>Markets</a>
+        </li>
+        <!--Mempool-->
+        <li>
+            <a href="#" class="white-text"><i class="material-icons left">access_time</i>Mempool</a>
+        </li>
+        <!--Orders-->
+        <li>
+            <a href="#" class="white-text"><i class="material-icons left">library_books</i>Orders</a>
+        </li>
+        <!--Sends-->
+        <li>
+            <a href="#" class="white-text"><i class="material-icons left">send</i>Sends</a>
+        </li>
+    </ul>
+    <!--Navigation bar section-->
+    <nav class="black">
+        <div class="nav-wrapper">
+            <a href="#!" class="brand-logo">
+                <picture>
+                    <img id="img-logo" src="{{ url_for('static', filename='img/coinweb-logo-small.svg') }}">
+                </picture>
+            </a>
+            <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul class="right hide-on-med-and-down navbar-content">
+                <!--Information-->
+                <li>
+                    <a href="#!" class="dropdown-trigger" data-target="data-dropdown-data"><i
+                            class="material-icons left white-text">data_usage</i>Information<i
+                            class="material-icons right white-text">arrow_drop_down</i></a>
+                </li>
+                <!--API-->
+                <li>
+                    <a href="#"><i class="material-icons left">extension</i>API</a>
+                </li>
+                <!--Status-->
+                <li>
+                    <a href="#"><i class="material-icons left">trending_up</i>Status</a>
+                </li>
+                <!--Wallets-->
+                <li>
+                    <a href="#"><i class="material-icons left">account_balance_wallet</i>Wallets</a>
+                </li>
+                <!--About-->
+                <li>
+                    <a href="#"><i class="material-icons left">info</i>About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--Mobile navigation section-->
+    <ul class="sidenav collapsible black" id="mobile-nav">
+        <!--Data-->
+        <li>
+            <a href="#" class="collapsible-header white-text"><i class="material-icons left white-text">data_usage</i>Information<i
+                    class="material-icons right white-text" id="info-collapsible-list">arrow_drop_down</i></a>
+            <div class="collapsible-body black">
+                <ul>
+                    <!--Assets-->
+                    <li><a href="/assets" class="white-text"><i class="material-icons left white-text">storage</i>Assets</a>
                     </li>
-                    <!--API-->
-                    <li>
-                        <a href="#"><i class="material-icons left">extension</i>API</a>
+                    <!--Bets-->
+                    <li><a href="/bets" class="white-text"><i
+                            class="material-icons left white-text">star_rate</i>Bets</a></li>
+                    <!--Blocks-->
+                    <li><a href="/blocks" class="white-text"><i
+                            class="material-icons left white-text">link</i>Blocks</a></li>
+                    <!--Broadcasts-->
+                    <li><a href="/broadcasts" class="white-text"><i class="material-icons left white-text">language</i>Broadcasts</a>
                     </li>
-                    <!--Status-->
-                    <li>
-                        <a href="#"><i class="material-icons left">trending_up</i>Status</a>
+                    <!--Burns-->
+                    <li><a href="/burns" class="white-text"><i class="material-icons left white-text">whatshot</i>Burns</a>
                     </li>
-                    <!--Wallets-->
-                    <li>
-                        <a href="#"><i class="material-icons left">account_balance_wallet</i>Wallets</a>
+                    <!--Dividends-->
+                    <li><a href="/dividends" class="white-text"><i
+                            class="material-icons left white-text">description</i>Dividends</a></li>
+                    <!--Issuances-->
+                    <li><a href="/issuances" class="white-text"><i class="material-icons left white-text">receipt</i>Issuances</a>
                     </li>
-                    <!--About-->
-                    <li>
-                        <a href="#"><i class="material-icons left">info</i>About</a>
+                    <!--Markets-->
+                    <li><a href="/markets" class="white-text"><i
+                            class="material-icons left white-text">import_export</i>Markets</a></li>
+                    <!--Mempool-->
+                    <li><a href="/mempool" class="white-text"><i class="material-icons left white-text">access_time</i>Mempool</a>
+                    </li>
+                    <!--Orders-->
+                    <li><a href="/orders" class="white-text"><i class="material-icons left white-text">library_books</i>Orders</a>
+                    </li>
+                    <!--Sends-->
+                    <li><a href="/sends" class="white-text"><i class="material-icons left white-text">send</i>Sends</a>
                     </li>
                 </ul>
             </div>
-        </nav>
-        <!--Mobile navigation section-->
-        <ul class="sidenav collapsible black" id="mobile-nav">
-            <!--Data-->
-            <li>
-                <a href="#" class="collapsible-header white-text"><i class="material-icons left white-text">data_usage</i>Information<i class="material-icons right white-text" id="info-collapsible-list">arrow_drop_down</i></a>
-                <div class="collapsible-body black">
-                    <ul>
-                        <!--Assets-->
-                        <li><a href="/assets" class="white-text"><i class="material-icons left white-text">storage</i>Assets</a></li>
-                        <!--Bets-->
-                        <li><a href="/bets" class="white-text"><i class="material-icons left white-text">star_rate</i>Bets</a></li>
-                        <!--Blocks-->
-                        <li><a href="/blocks" class="white-text"><i class="material-icons left white-text">link</i>Blocks</a></li>
-                        <!--Broadcasts-->
-                        <li><a href="/broadcasts" class="white-text"><i class="material-icons left white-text">language</i>Broadcasts</a></li>
-                        <!--Burns-->
-                        <li><a href="/burns" class="white-text"><i class="material-icons left white-text">whatshot</i>Burns</a></li>
-                        <!--Dividends-->
-                        <li><a href="/dividends" class="white-text"><i class="material-icons left white-text">description</i>Dividends</a></li>
-                        <!--Issuances-->
-                        <li><a href="/issuances" class="white-text"><i class="material-icons left white-text">receipt</i>Issuances</a></li>
-                        <!--Markets-->
-                        <li><a href="/markets" class="white-text"><i class="material-icons left white-text">import_export</i>Markets</a></li>
-                        <!--Mempool-->
-                        <li><a href="/mempool" class="white-text"><i class="material-icons left white-text">access_time</i>Mempool</a></li>
-                        <!--Orders-->
-                        <li><a href="/orders" class="white-text"><i class="material-icons left white-text">library_books</i>Orders</a></li>
-                        <!--Sends-->
-                        <li><a href="/sends" class="white-text"><i class="material-icons left white-text">send</i>Sends</a></li>
-                    </ul>
-                </div>
-            </li>
-            <!--API-->
-            <li>
-                <a href="#" class="collapsible-header white-text"><i class="material-icons left white-text">extension</i>API</a>
-            </li>
-            <!--Status-->
-            <li>
-                <a href="#" class="collapsible-header white-text"><i class="material-icons left white-text">trending_up</i>Status</a>
-            </li>
-            <!--Wallets-->
-            <li>
-                <a href="#" class="collapsible-header white-text"><i class="material-icons left white-text">account_balance_wallet</i>Wallets</a>
-            </li>
-            <!--About-->
-            <li>
-                <a href="#" class="collapsible-header white-text"><i class="material-icons left white-text">info</i>About</a>
-            </li>
-        </ul>
-        {% block header %}{% endblock %}
-    </header>
-    <!--Main Section-->
-    <main>{% block main %}{% endblock %}</main>
-    <!--Footer Section-->
-    <footer>{% block footer %}{% endblock %}</footer>
-    <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-    <!--Custom script-->
-    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
-    {% block scripts %}{% endblock %}
+        </li>
+        <!--API-->
+        <li>
+            <a href="#" class="collapsible-header white-text"><i class="material-icons left white-text">extension</i>API</a>
+        </li>
+        <!--Status-->
+        <li>
+            <a href="#" class="collapsible-header white-text"><i class="material-icons left white-text">trending_up</i>Status</a>
+        </li>
+        <!--Wallets-->
+        <li>
+            <a href="#" class="collapsible-header white-text"><i class="material-icons left white-text">account_balance_wallet</i>Wallets</a>
+        </li>
+        <!--About-->
+        <li>
+            <a href="#" class="collapsible-header white-text"><i
+                    class="material-icons left white-text">info</i>About</a>
+        </li>
+    </ul>
+    {% block header %}{% endblock %}
+</header>
+<!--Main Section-->
+<main>{% block main %}{% endblock %}</main>
+<!--Footer Section-->
+<footer>{% block footer %}{% endblock %}</footer>
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+<!--Custom script-->
+<script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% block scripts %}{% endblock %}
 </body>
 </html>

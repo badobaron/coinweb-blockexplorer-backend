@@ -92,8 +92,8 @@ def get_named_assets_names(quantity_of_assets, offset):
         if asset.isalpha():
             break
     # To exclude key error
-    start = index + offset if index+offset<len(data['result']) else len(data['result'])
-    end = start + quantity_of_assets if start+quantity_of_assets<len(data['result']) else len(data['result'])
+    start = index + offset if index + offset < len(data['result']) else len(data['result'])
+    end = start + quantity_of_assets if start + quantity_of_assets < len(data['result']) else len(data['result'])
 
     named_assets = data['result'][index:end]
     return named_assets
@@ -154,12 +154,13 @@ def get_numeric_assets_names(quantity_of_assets=10, offset=0):
         if asset.isalpha():
             break
     # To exclude key error
-    start = offset if offset<index else index
+    start = offset if offset < index else index
     end = start + quantity_of_assets if start + quantity_of_assets < index else index
 
     return data['result'][start:end]
 
-def get_numeric_assets(quantity_of_assets=10,offset=0):
+
+def get_numeric_assets(quantity_of_assets=10, offset=0):
     """
         Get info about numeric assets.
 

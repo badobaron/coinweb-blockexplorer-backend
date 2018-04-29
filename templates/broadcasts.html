@@ -53,36 +53,36 @@
 </div>
 
 <script>
-//add .format function
-String.prototype.format = function () {
+    //add .format function
+    String.prototype.format = function () {
         var args = [].slice.call(arguments);
-        return this.replace(/(\{\d+\})/g, function (a){
-            return args[+(a.substr(1,a.length-2))||0];
+        return this.replace(/(\{\d+\})/g, function (a) {
+            return args[+(a.substr(1, a.length - 2)) || 0];
         });
-};
+    };
 
-//add function which shorten str and change end of str with ...
-String.prototype.trunc = String.prototype.trunc ||
-      function(n){
-          return (this.length > n) ? this.substr(0, n-1) + '&hellip;' : this;
-      };
+    //add function which shorten str and change end of str with ...
+    String.prototype.trunc = String.prototype.trunc ||
+        function (n) {
+            return (this.length > n) ? this.substr(0, n - 1) + '&hellip;' : this;
+        };
 
 
-var per_page=10;
-//request to the server
+    var per_page = 10;
+    //request to the server
     $.ajax({
-        url:'/broadcastsAll',
+        url: '/broadcastsAll',
         type: 'POST',
         contentType: 'application/json;charset=UTF-8',
-        data:JSON.stringify({'per_page':10},null,'\t'),
-        success: function(response) {
-            response=JSON.parse(response);
-            var default_string="<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td>";
-            var my_table=$("#broadcasts").find('tbody')
-            response.slice(0,per_page).forEach(function(broadcast,i,response){
-                    my_table.append($('<tr>')
-                        .append(default_string.format(i+1,broadcast['block_index'],broadcast['time'],broadcast['source'],broadcast['text'].trunc(39),broadcast['value'],(broadcast['fee_fraction_int']/1000000).toFixed(2)+'%'))
-                    );
+        data: JSON.stringify({'per_page': 10}, null, '\t'),
+        success: function (response) {
+            response = JSON.parse(response);
+            var default_string = "<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td>";
+            var my_table = $("#broadcasts").find('tbody')
+            response.slice(0, per_page).forEach(function (broadcast, i, response) {
+                my_table.append($('<tr>')
+                    .append(default_string.format(i + 1, broadcast['block_index'], broadcast['time'], broadcast['source'], broadcast['text'].trunc(39), broadcast['value'], (broadcast['fee_fraction_int'] / 1000000).toFixed(2) + '%'))
+                );
             })
         }
     })

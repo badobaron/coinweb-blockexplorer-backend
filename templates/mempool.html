@@ -1,0 +1,121 @@
+{% extends 'template.html' %}
+
+{% block title %}
+<title>Mempool :: Coinweb Block Explorer</title>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="row center">
+        <div class="col s12">
+            <h1 class="header">Mempool</h1>
+        </div>
+        <!--Mempool-->
+        <div class="col s12">
+            <ul class="collection with-header">
+                <li class="collection-header">
+                    <h5>
+                        <i class="material-icons left">storage</i>
+                        Mempool
+                        <span class="badge">72,000 results</span>
+                    </h5>
+                </li>
+                <li class="collection-item">
+                    <table class="highlight" id="mempool">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Time</th>
+                            <th>Type</th>
+                            <th>Source</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </li>
+                <li class="collection-item">
+                    <ul class="pagination center-align">
+                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                        <li class="active"><a href="#!">1</a></li>
+                        <li class="waves-effect"><a href="#!">2</a></li>
+                        <li class="waves-effect"><a href="#!">3</a></li>
+                        <li class="waves-effect"><a href="#!">4</a></li>
+                        <li class="waves-effect"><a href="#!">5</a></li>
+                        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    //add .format function
+    String.prototype.format = function () {
+        var args = [].slice.call(arguments);
+        return this.replace(/(\{\d+\})/g, function (a) {
+            return args[+(a.substr(1, a.length - 2)) || 0];
+        });
+    };
+
+
+    var per_page = 10;
+    //request to the server
+    $.ajax({
+        url: '/mempoolAll',
+        type: 'POST',
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify({'per_page': 10}, null, '\t'),
+        success: function (response) {
+            response = JSON.parse(response);
+            var default_string = "<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td>";
+            var my_table = $("#mempool").find('tbody')
+            if (response === false) {
+                my_table.append($("<tr style='text-align: justify'>").append("No records found"))
+            }
+            else {
+                response.slice(0, per_page).forEach(function (mempool, i, response) {
+                    var details = '';
+                    if (mempool['category'] == 'orders') {
+                        /*
+                        {0}: (quantity_of_get_currency/100000000 (if quantity_of_get_currency.length >=7) else quantity_of_get_currency) if (quantity_of_get_currency!=NaN) else 0
+                        {1}: get_asset
+                        {2}:(quantity_of_give_currency/100000000 (if quantity_of_give_currency.length >=7) else quantity_of_give_currency) if (quantity_of_give_currency!=NaN) else 0
+                        {3}: give_asset
+                        */
+                        details = '{0} {1} for {2} {3}'.format((mempool['bindings']['get_quantity'] ? (mempool['bindings']['get_quantity'].toString().length >= 7 ? (mempool['bindings']['get_quantity'] / 100000000).toFixed(9) : mempool['bindings']['get_quantity']) : 0), mempool['bindings']['get_asset'], (mempool['bindings']['give_quantity'] ? (mempool['bindings']['give_quantity'].toString().length >= 7 ? (mempool['bindings']['give_quantity'] / 100000000).toFixed(9) : mempool['bindings']['give_quantity']) : 0), mempool['bindings']['give_asset']);
+                    }
+                    else if (mempool['category'] == 'sends') {
+                        /*
+                        {0}: (quantity_of_currency/100000000 (if quantity_of_currency.length >=7) else quantity_of_currency) if (quantity_of_currency!=NaN) else 0
+                        {1}: asset
+                        {2}: destination
+                         */
+                        details = '{0} {1} to {2}'.format((mempool['bindings']['quantity'] ? (mempool['bindings']['quantity'].toString().length >= 7 ? (mempool['bindings']['quantity'] / 100000000).toFixed(9) : mempool['bindings']['quantity']) : 0), mempool['bindings']['asset'], mempool['bindings']['destination']);
+                    }
+                    else if (mempool['category'] == 'cancels') {
+                        /*
+                        {0}: offer_hash
+                         */
+                        details = 'Cancel order {0}'.format(mempool['bindings']['offer_hash']);
+                    }
+                    else if (mempool['category'] == 'issuances') {
+                        /*
+                        {0}: (quantity_of_currency/100000000 (if quantity_of_currency.length >=7) else quantity_of_currency) if (quantity_of_currency!=NaN) else 0
+                        {1}: asset
+                         */
+                        details = 'Issue {0} {1} tokens'.format(mempool['bindings']['quantity'] ? (mempool['bindings']['quantity'].toString().length >= 7 ? (mempool['bindings']['quantity'] / 100000000).toFixed(9) : mempool['bindings']['quantity']) : 0, mempool['bindings']['asset']);
+                    }
+                    my_table.append($('<tr>')
+                        .append(default_string.format(response.length - i, mempool['time'], mempool['category'], mempool['bindings']['source'], details))
+                    );
+                })
+            }
+        }
+    })
+
+
+</script>
+
+{% endblock %}
