@@ -27,10 +27,4 @@ def get_sends(quantity_of_sends=10, offset=0):
     response = requests.post(URL, data=json.dumps(payload), headers=HEADERS, auth=AUTH)
     data = json.loads(response.text)
 
-    for i in data['result']:
-        print(i)
-
     return json.dumps(data['result'])
-
-if __name__ == '__main__':
-    get_sends()
