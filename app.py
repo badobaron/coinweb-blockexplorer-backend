@@ -157,10 +157,9 @@ def assets_named_get_info():
 
 
 # Subassets
-# TODO: add get_info function for subassets
 @app.route('/assetsSub', methods=['POST'])
 def assets_sub_get_info():
-    pass
+    return core_assets.get_sub_assets()
 
 
 # Numeric assets

@@ -6,16 +6,16 @@ from core.connection import URL, HEADERS, AUTH
 
 
 # Get all assets list
-def get_all_assets_names(quantity_of_assets=10, offset=3):
+def get_all_assets(quantity_of_assets=10, offset=3):
     """
-    Get names of assets. Used only in get_assets() function.
+    Get all assets. Offset is equals 3 to exclude BTC,XCP,FRYE assets
 
     :param quantity_of_assets: quantity of assets
     :param offset: offset for the list of assets
     :type quantity_of_assets: int
     :type offset: int
-    :return assets: list of assets names
-    :rtype assets: list
+    :return assets: JSON string of all assets
+    :rtype assets: JSON
     """
     # Preparing data
     payload = {"method": "get_assets",
@@ -29,22 +29,19 @@ def get_all_assets_names(quantity_of_assets=10, offset=3):
 
     assets_names = []
     for i in data['result']:
-        id = i['asset_id']
-        longname = i['asset_longname']
-        name = i['asset_name']
-        index = i['block_index']
-        assets_names.append(name)
-    return assets_names
+        assets_names.append(i['asset_name'])
+
+    return get_assets_info(assets_names)
 
 
-def get_all_assets(quantity_of_assets=10, offset=3):
+# Function which is used in get_all_assets, get_named_assets, get_sub_assets, get_numeric_assets.
+# Return description about given assets names
+def get_assets_info(names):
     """
-    Get info about assets. Offset is equals 3 to exclude BTC,XCP,FRYE assets
+    Get info about given assets type.
 
-    :param quantity_of_assets: quantity of assets
-    :param offset: offset for the list of
-    :type quantity_of_assets: int
-    :type offset: int
+    :param names: names of assets
+    :type names: list of stings
     :return data: JSON string which includes: asset (string): The assets of the asset itself
                                               asset_longname (string): The subasset longname, if any
                                               owner (string): The address that currently owns the asset
@@ -55,29 +52,28 @@ def get_all_assets(quantity_of_assets=10, offset=3):
                                               issuer (string): The asset’s original owner (i.e. issuer)
     :rtype data: JSON
     """
-    list_of_assets_names = get_all_assets_names(quantity_of_assets, offset)
     payload = {"method": "get_asset_info",
                "params": {},
                "jsonrpc": "2.0",
                "id": 0
                }
-    payload['params'] = {'assets': list_of_assets_names}
+    payload['params'] = {'assets': names}
     response = requests.post(URL, data=json.dumps(payload), headers=HEADERS, auth=AUTH)
     data = json.loads(response.text)
     return json.dumps(data['result'])
 
 
 # Get named assets list
-def get_named_assets_names(quantity_of_assets, offset):
+def get_named_assets(quantity_of_assets=10, offset=0):
     """
-        Get names of named assets. Used only in get_named_assets() function.
+        Get named assets.
 
         :param quantity_of_assets: quantity of assets
         :param offset: offset for the list of assets
         :type quantity_of_assets: int
         :type offset: int
-        :return assets: list of assets names
-        :rtype assets: list
+        :return assets: JSON string of named assets
+        :rtype assets: JSON
     """
     payload = {"method": "get_asset_names",
                "params": {},
@@ -87,7 +83,6 @@ def get_named_assets_names(quantity_of_assets, offset):
     payload['params'] = {}
     response = requests.post(URL, data=json.dumps(payload), headers=HEADERS, auth=AUTH)
     data = json.loads(response.text)
-
     for index, asset in enumerate(data['result']):
         if asset.isalpha():
             break
@@ -96,50 +91,51 @@ def get_named_assets_names(quantity_of_assets, offset):
     end = start + quantity_of_assets if start + quantity_of_assets < len(data['result']) else len(data['result'])
 
     named_assets = data['result'][index:end]
-    return named_assets
+    return get_assets_info(named_assets)
 
 
-def get_named_assets(quantity_of_assets=10, offset=0):
+# Get subassets list
+def get_sub_assets(quantity_of_assets=10, offset=0):
     """
-        Get info about named assets.
+    Get subassets.
 
-        :param quantity_of_assets: quantity of assets
-        :param offset: offset for the list of
-        :type quantity_of_assets: int
-        :type offset: int
-        :return data: JSON string which includes: asset (string): The assets of the asset itself
-                                                  asset_longname (string): The subasset longname, if any
-                                                  owner (string): The address that currently owns the asset
-                                                  divisible (boolean): Whether the asset is divisible or not
-                                                  locked (boolean): Whether the asset is locked
-                                                  total_issued (integer): The quantities of the asset issued, in total
-                                                  description (string): The asset’s current description
-                                                  issuer (string): The asset’s original owner (i.e. issuer)
-        :rtype data: JSON
+    :param quantity_of_assets: quantity of subassets
+    :param offset: offset for the list of subassets
+    :type quantity_of_assets: int
+    :type offset: int
+    :return assets: JSON sting of subassets
+    :rtype assets: JSON
     """
-    list_of_assets_names = get_named_assets_names(quantity_of_assets, offset)
-    payload = {"method": "get_asset_info",
+    # Preparing data
+    payload = {"method": "get_assets",
                "params": {},
                "jsonrpc": "2.0",
                "id": 0
                }
-    payload['params'] = {'assets': list_of_assets_names}
+    payload['params'] = {'order_by': 'asset_longname', 'limit': quantity_of_assets, 'offset': offset,
+                         "filters": [{"field": "asset_longname", "op": "!=", "value": "None"}]
+                         }
     response = requests.post(URL, data=json.dumps(payload), headers=HEADERS, auth=AUTH)
     data = json.loads(response.text)
-    return json.dumps(data['result'])
+
+    assets_names = []
+    for i in data['result']:
+        name = i['asset_longname']
+        assets_names.append(name)
+    return get_assets_info(assets_names)
 
 
 # Numeric assets
-def get_numeric_assets_names(quantity_of_assets=10, offset=0):
+def get_numeric_assets(quantity_of_assets=10, offset=0):
     """
-        Get names of numeric assets. Used only in get_numeric_assets() function.
+        Get numeric assets.
 
         :param quantity_of_assets: quantity of assets
         :param offset: offset for the list of assets
         :type quantity_of_assets: int
         :type offset: int
-        :return assets: list of assets names
-        :rtype assets: list
+        :return assets: JSON string of numeric assets
+        :rtype assets: JSON
     """
     payload = {"method": "get_asset_names",
                "params": {},
@@ -157,34 +153,5 @@ def get_numeric_assets_names(quantity_of_assets=10, offset=0):
     start = offset if offset < index else index
     end = start + quantity_of_assets if start + quantity_of_assets < index else index
 
-    return data['result'][start:end]
-
-
-def get_numeric_assets(quantity_of_assets=10, offset=0):
-    """
-        Get info about numeric assets.
-
-        :param quantity_of_assets: quantity of assets
-        :param offset: offset for the list of
-        :type quantity_of_assets: int
-        :type offset: int
-        :return data: JSON string which includes: asset (string): The assets of the asset itself
-                                                  asset_longname (string): The subasset longname, if any
-                                                  owner (string): The address that currently owns the asset
-                                                  divisible (boolean): Whether the asset is divisible or not
-                                                  locked (boolean): Whether the asset is locked
-                                                  total_issued (integer): The quantities of the asset issued, in total
-                                                  description (string): The asset’s current description
-                                                  issuer (string): The asset’s original owner (i.e. issuer)
-        :rtype data: JSON
-    """
-    list_of_assets_names = get_numeric_assets_names(quantity_of_assets, offset)
-    payload = {"method": "get_asset_info",
-               "params": {},
-               "jsonrpc": "2.0",
-               "id": 0
-               }
-    payload['params'] = {'assets': list_of_assets_names}
-    response = requests.post(URL, data=json.dumps(payload), headers=HEADERS, auth=AUTH)
-    data = json.loads(response.text)
-    return json.dumps(data['result'])
+    numeric_assets = data['result'][start:end]
+    return get_assets_info(numeric_assets)
