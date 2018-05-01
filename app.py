@@ -9,6 +9,7 @@ import core.dividends as core_dividends
 import core.issuances as core_issuances
 import core.mempool as core_mempool
 import core.orders as core_orders
+import core.sends as core_sends
 
 # Registering our app
 app = Flask(__name__)
@@ -103,10 +104,9 @@ def orders():
 
 
 # Sends category routing
-# TODO: add render methods for sends template
 @app.route('/sends')
 def sends():
-    pass
+    return render_template('/sends.html')
 
 
 # API category routing
@@ -212,10 +212,17 @@ def issuances_all_get_info():
 def mempool_all_get_info():
     return core_mempool.get_mempool()
 
+
 # ORDERS
 @app.route('/ordersAll', methods=['POST'])
 def orders_all_get_info():
     return core_orders.get_orders()
+
+
+# SENDS
+@app.route('/sendsAll', methods=['POST'])
+def sends_all_get_info():
+    return core_sends.get_sends()
 
 
 if __name__ == '__main__':

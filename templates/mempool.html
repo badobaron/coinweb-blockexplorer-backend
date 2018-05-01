@@ -77,8 +77,8 @@
             else {
                 response.slice(0, per_page).forEach(function (mempool, i, response) {
                     /*
-                    I add if statements, because give_quantity and get_quantity are given in different
-                    dimensions, so can some low cost currencies may be represented incorrectly.
+                    I add if statements, because quantities are given in different
+                    dimensions, so some low cost currencies may be represented incorrectly.
                     Example: give_quantity: 1000000000 BitCrystals
                     will be represented like 1000000000 but must be like 10 BitCrystals.
 
