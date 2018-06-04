@@ -10,6 +10,7 @@ import core.issuances as core_issuances
 import core.mempool as core_mempool
 import core.orders as core_orders
 import core.sends as core_sends
+import core.blocks as core_blocks
 
 # Registering our app
 app = Flask(__name__)
@@ -54,10 +55,9 @@ def bets():
 
 
 # Blocks category routing
-# TODO: add render method for blocks template
 @app.route('/blocks')
 def blocks():
-    pass
+    return render_template('blocks.html')
 
 
 # Broadcasts category routing
@@ -94,19 +94,19 @@ def markets():
 # Mempool category routing
 @app.route('/mempool')
 def mempool():
-    return render_template('/mempool.html')
+    return render_template('mempool.html')
 
 
 # Orders category routing
 @app.route('/orders')
 def orders():
-    return render_template('/orders.html')
+    return render_template('orders.html')
 
 
 # Sends category routing
 @app.route('/sends')
 def sends():
-    return render_template('/sends.html')
+    return render_template('sends.html')
 
 
 # API category routing
@@ -179,7 +179,7 @@ def bets_all_get_info():
 # TODO: add get_info function for blocks
 @app.route('/blocksAll', methods=['POST'])
 def blocks_all_get_info():
-    pass
+    return core_blocks.get_blocks()
 
 
 # BROADCASTS
