@@ -1,10 +1,10 @@
-import datetime
 import json
 
 import requests
-from dateutil.relativedelta import relativedelta
 
 from core.connection import URL, HEADERS, AUTH
+
+from core.timeCalculation import calculate_time
 
 
 def get_broadcasts(quantity_of_broadcasts=10, offset=0):
@@ -29,31 +29,6 @@ def get_broadcasts(quantity_of_broadcasts=10, offset=0):
     response = requests.post(URL, data=json.dumps(payload), headers=HEADERS, auth=AUTH)
     data = json.loads(response.text)
 
-    # Calculate date and datealt for broadcast
-    now = datetime.datetime.utcnow()
-    for i in data['result']:
-        broadcast_time = datetime.datetime.utcfromtimestamp(i['timestamp'])
-        i['timestamp'] = broadcast_time.strftime('%Y-%m-%d %H:%M:%S')
-        time = relativedelta(now, broadcast_time)
-        if time.years:
-            if time.years == 1:
-                i['time'] = 'a year ago'
-            else:
-                i['time'] = str(time.years) + ' years ago'
-        elif time.months:
-            if time.months == 1:
-                i['time'] = 'a month ago'
-            else:
-                i['time'] = str(time.months) + ' months ago'
-        elif time.days:
-            if time.days == 1:
-                i['time'] = 'a day ago'
-            else:
-                i['time'] = str(time.days) + ' days ago'
-        else:
-            if time.hours == 1:
-                i['time'] = 'a hour ago'
-            else:
-                i['time'] = str(time.hours) + ' hours ago'
+    data = calculate_time(data)
 
     return json.dumps(data['result'])

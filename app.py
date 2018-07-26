@@ -11,6 +11,7 @@ import core.mempool as core_mempool
 import core.orders as core_orders
 import core.sends as core_sends
 import core.blocks as core_blocks
+import core.index as core_index
 
 # Registering our app
 app = Flask(__name__)
@@ -140,6 +141,12 @@ def about():
 ##################
 # Requests handlers
 ##################
+# INDEX PAGE
+@app.route('/indexInfo', methods=['POST'])
+def index_page_info():
+    return core_index.get_index_info()
+
+
 # ASSETS
 # All assets
 @app.route('/assetsAll', methods=['POST'])
@@ -172,7 +179,8 @@ def assets_numeric_get_info():
 # BETS
 @app.route('/betsAll', methods=['POST'])
 def bets_all_get_info():
-    return core_bets.get_bets()
+    data = request.json
+    return core_bets.get_bets(data['per_page'], data['offset'])
 
 
 # BLOCKS

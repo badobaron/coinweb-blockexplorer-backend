@@ -72,7 +72,7 @@
             var my_table = $("#blocks").find('tbody')
             response.slice(0, per_page).forEach(function (bet, i, response) {
                 my_table.append($('<tr>')
-                    .append(default_string.format(i + 1, bet['block_index'], bet['block_hash'], bet['block_time']))
+                    .append(default_string.format(i + 1, bet['block_index'], bet['block_hash'], bet['time'])))
             })
         }
     })
