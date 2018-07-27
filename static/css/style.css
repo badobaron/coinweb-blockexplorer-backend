@@ -40,3 +40,9 @@
     margin-top: 5px;
     margin-bottom: 0;
 }
+
+ .tabs {
+    display:-webkit-flex;
+    display: -ms-flexbox;
+    display: flex
+}
