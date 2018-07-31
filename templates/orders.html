@@ -67,11 +67,11 @@
         url: '/ordersAll',
         type: 'POST',
         contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify({'per_page': 10}, null, '\t'),
+        data: JSON.stringify({'per_page': per_page}, null, '\t'),
         success: function (response) {
             response = JSON.parse(response);
             var default_string = "<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td>";
-            var my_table = $("#orders").find('tbody')
+            var my_table = $("#orders").find('tbody');
             response.slice(0, per_page).forEach(function (order, i, response) {
                 my_table.append($('<tr>')
                     /*

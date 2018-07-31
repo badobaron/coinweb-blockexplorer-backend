@@ -1,146 +1,126 @@
 {% extends 'template.html' %}
 
 {% block title %}
-    <title>Bets :: Coinweb Block Explorer</title>
+<title>Bets :: Coinweb Block Explorer</title>
 {% endblock %}
 
 {% block main %}
-    <div class="container">
-        <div class="row center">
-            <div class="col s12">
-                <h1 class="header">Bets</h1>
-            </div>
-            <!--Bets-->
-            <div class="col s12">
-                <ul class="collection with-header">
-                    <li class="collection-header">
-                        <h5>
-                            <i class="material-icons left">storage</i>
-                            Bets
-                            <span class="badge">72,000 results</span>
+<div class="container">
+    <div class="row center">
+        <div class="col s12">
+            <h1 class="header">Bets</h1>
+        </div>
+        <!--Bets-->
+        <div class="col s12">
+            <ul class="collection with-header">
+                <li class="collection-header">
+                    <h5>
+                        <i class="material-icons left">storage</i>
+                        Bets
+                        <span class="badge">72,000 results</span>
 
 
-                        </h5>
+                    </h5>
 
-                    </li>
-                    <li class="collection-item">
-                        <table class="highlight" id="bets">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Block</th>
-                                <th>Time</th>
-                                <th>Source</th>
-                                <th>Feed</th>
-                                <th>Fee</th>
-                            </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </li>
-                    <li class="collection-item">
-                        <ul class="pagination center-align">
-                            <li class="disabled" id='left'><a href="#!"><i class="material-icons">chevron_left</i></a>
-                            </li>
-                            <li class="active" id='1'><a href="#!">1</a></li>
-                            <li class="waves-effect" id='2'><a href="#!">2</a></li>
-                            <li class="waves-effect" id='3'><a href="#!">3</a></li>
-                            <li class="waves-effect" id='4'><a href="#!">4</a></li>
-                            <li class="waves-effect" id='5'><a href="#!">5</a></li>
-                            <li class="waves-effect" id='right'><a href="#!"><i class="material-icons">chevron_right</i></a>
-                            </li>
+                </li>
+                <li class="collection-item">
+                    <table class="highlight" id="bets">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Block</th>
+                            <th>Time</th>
+                            <th>Source</th>
+                            <th>Feed</th>
+                            <th>Fee</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </li>
+                <li class="collection-item">
+                    <ul class="pagination center-align">
+                        <li class="disabled" id='left'><a href="#!"><i class="material-icons">chevron_left</i></a>
+                        </li>
+                        <li id="pagination">1</li>
+                        <li class="waves-effect" id='right'><a href="#!"><i class="material-icons">chevron_right</i></a>
+                        </li>
 
-                            </ul>
-                        </ul>
-                    </li>
-                </ul>
+                    </ul>
+            </ul>
+            </li>
+            </ul>
 
-            </div>
         </div>
     </div>
+</div>
 
-    <script>
-        //add .format function
-        String.prototype.format = function () {
-            var args = [].slice.call(arguments);
-            return this.replace(/(\{\d+\})/g, function (a) {
-                return args[+(a.substr(1, a.length - 2)) || 0];
-            });
-        };
-
-
-        var per_page = 10;
-        var current_page = 1;
-
-        document.getElementById("per_page").innerHTML = per_page ;
-
-        function requestToServer(per_page, current_page) {
-            //request to the server
-            $.ajax({
-                url: '/betsAll',
-                type: 'POST',
-                contentType: 'application/json;charset=UTF-8',
-                data: JSON.stringify({per_page, 'offset': current_page * per_page - 10}, null, '\t'),
-                success: function (response) {
-                    response = JSON.parse(response);
-                    var default_string = "<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td>";
-                    var my_table = $("#bets").find('tbody').empty();
-                    // my_table[0]='<tbody></tbody>';
-                    response.slice(0, per_page).forEach(function (bet, i, response) {
-                        my_table.append($('<tr>')
-                            .append(default_string.format(i + 1, bet['block_index'], '?', bet['source'], bet['feed_address'], (bet['fee_fraction_int'] / 1000000).toFixed(2) + '%'))
-                        );
-                    });
-                }
-            })
-        }
-
-        requestToServer(per_page, current_page);
+<script>
+    //add .format function
+    String.prototype.format = function () {
+        var args = [].slice.call(arguments);
+        return this.replace(/(\{\d+\})/g, function (a) {
+            return args[+(a.substr(1, a.length - 2)) || 0];
+        });
+    };
 
 
-        function pagination(per_page_num, current_page_num, button_text) {
-            if (button_text !== 'left' || button_text !== 'right') {
-                $('#' + button_text.toString()).addClass('active');
-                $('#' + current_page_num.toString()).removeClass('active');
+    var per_page = 10;
+    var current_page = 1;
+
+    // document.getElementById("per_page").innerHTML = per_page;
+
+    function requestToServer(per_page, current_page) {
+        //request to the server
+        $.ajax({
+            url: '/betsAll',
+            type: 'POST',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({per_page, 'offset': current_page * per_page - 10}, null, '\t'),
+            success: function (response) {
+                response = JSON.parse(response);
+                var default_string = "<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td>";
+                var my_table = $("#bets").find('tbody').empty();
+                // my_table[0]='<tbody></tbody>';
+                response.slice(0, per_page).forEach(function (bet, i, response) {
+                    my_table.append($('<tr>')
+                        .append(default_string.format(i + 1, bet['block_index'], '?', bet['source'], bet['feed_address'], (bet['fee_fraction_int'] / 1000000).toFixed(2) + '%'))
+                    );
+                });
             }
-            ;
+        })
+    }
 
-            if (parseInt(button_text) > 1) {
-                $('#left').removeClass('disabled');
-            } else if (parseInt(button_text) < 5) {
-                $('#right').removeClass('disabled');
-            }
-            if (parseInt(button_text) === 1) {
-                $('#left').addClass('disabled');
-            } else if (parseInt(button_text) === 5) {
+    requestToServer(per_page, current_page);
+
+
+    function pagination(per_page_num, current_page_num, button_text) {
+        console.log(per_page_num,current_page_num,button_text);
+        console.log(button_text==='chevron_right');
+        if (button_text === 'chevron_right') {
+            $('#left').removeClass('disabled');
+            if (current_page_num === 10 - 1) {
                 $('#right').addClass('disabled');
             }
-            requestToServer(per_page, current_page_num);
-            current_page = parseInt(button_text);
+            current_page++;
+        } else if (button_text === 'chevron_left') {
+            $('#right').removeClass('disabled');
+            if (current_page_num === 2 - 1) {
+                $('#left').addClass('disabled');
+            }
+            current_page--;
         }
+        $('#pagination').innerHTML = current_page;
+        requestToServer(per_page, current_page);
+    }
 
-        $('#left').on('click', function () {
-            pagination(per_page, current_page, $('#left').text());
-        });
-        $('#1').on('click', function () {
-            pagination(per_page, current_page, $('#1').text());
-        });
-        $('#2').on('click', function () {
-            pagination(per_page, current_page, $('#2').text());
-        });
-        $('#3').on('click', function () {
-            pagination(per_page, current_page, $('#3').text());
-        });
-        $('#4').on('click', function () {
-            pagination(per_page, current_page, $('#4').text());
-        });
-        $('#5').on('click', function () {
-            pagination(per_page, current_page, $('#5').text());
-        });
-        $('#right').on('click', function () {
-            pagination(per_page, current_page, $('#right').text())
-        });
+    $('#left').on('click', function () {
+        pagination(per_page, current_page, $('#left').text());
+    });
+    $('#right').on('click', function () {
+        pagination(per_page, current_page, $('#right').text())
+    });
 
-    </script>
+</script>
 
 {% endblock %}

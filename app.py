@@ -151,14 +151,15 @@ def index_page_info():
 # All assets
 @app.route('/assetsAll', methods=['POST'])
 def assets_all_get_info():
-    page = request.json['per_page']
+    per_page = request.json['per_page']
     # Average time 17.5 sec!!! Very slow
-    return core_assets.get_all_assets()
+    return core_assets.get_all_assets(per_page)
 
 
 # Named assets
 @app.route('/assetsNamed', methods=['POST'])
 def assets_named_get_info():
+    per_page = request.json['per_page']
     # Average time 17.5 sec!!! Very slow
     return core_assets.get_named_assets()
 
@@ -166,12 +167,14 @@ def assets_named_get_info():
 # Subassets
 @app.route('/assetsSub', methods=['POST'])
 def assets_sub_get_info():
+    per_page = request.json['per_page']
     return core_assets.get_sub_assets()
 
 
 # Numeric assets
 @app.route('/assetsNumeric', methods=['POST'])
 def assets_numeric_get_info():
+    per_page = request.json['per_page']
     # Average time 17.5 sec!!! Very slow
     return core_assets.get_numeric_assets()
 
@@ -179,6 +182,7 @@ def assets_numeric_get_info():
 # BETS
 @app.route('/betsAll', methods=['POST'])
 def bets_all_get_info():
+    per_page = request.json['per_page']
     data = request.json
     return core_bets.get_bets(data['per_page'], data['offset'])
 
@@ -187,31 +191,36 @@ def bets_all_get_info():
 # TODO: add get_info function for blocks
 @app.route('/blocksAll', methods=['POST'])
 def blocks_all_get_info():
-    return core_blocks.get_blocks()
+    per_page = request.json['per_page']
+    return core_blocks.get_blocks(per_page)
 
 
 # BROADCASTS
 @app.route('/broadcastsAll', methods=['POST'])
 def broadcasts_all_get_info():
-    return core_broadcasts.get_broadcasts()
+    per_page = request.json['per_page']
+    return core_broadcasts.get_broadcasts(per_page)
 
 
 # BURNS
 @app.route('/burnsAll', methods=['POST'])
 def burns_all_get_info():
-    return core_burns.get_burns()
+    per_page = request.json['per_page']
+    return core_burns.get_burns(per_page)
 
 
 # DIVIDENDS
 @app.route('/dividendsAll', methods=['POST'])
 def dividends_all_get_info():
-    return core_dividends.get_dividends()
+    per_page = request.json['per_page']
+    return core_dividends.get_dividends(per_page)
 
 
 # ISSUANCES
 @app.route('/issuancesAll', methods=['POST'])
 def issuances_all_get_info():
-    return core_issuances.get_issuances()
+    per_page = request.json['per_page']
+    return core_issuances.get_issuances(per_page)
 
 
 # MEMPOOL
@@ -223,13 +232,15 @@ def mempool_all_get_info():
 # ORDERS
 @app.route('/ordersAll', methods=['POST'])
 def orders_all_get_info():
-    return core_orders.get_orders()
+    per_page = request.json['per_page']
+    return core_orders.get_orders(per_page)
 
 
 # SENDS
 @app.route('/sendsAll', methods=['POST'])
 def sends_all_get_info():
-    return core_sends.get_sends()
+    per_page = request.json['per_page']
+    return core_sends.get_sends(per_page)
 
 
 if __name__ == '__main__':
