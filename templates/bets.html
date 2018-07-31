@@ -40,7 +40,7 @@
                 </li>
                 <li class="collection-item">
                     <ul class="pagination center-align">
-                        <li class="disabled" id='left'><a href="#!"><i class="material-icons">chevron_left</i></a>
+                        <li class="waves-effect" id='left'><a href="#!"><i class="material-icons">chevron_left</i></a>
                         </li>
                         <li id="pagination">1</li>
                         <li class="waves-effect" id='right'><a href="#!"><i class="material-icons">chevron_right</i></a>
@@ -56,6 +56,7 @@
 </div>
 
 <script>
+    $('#left').hide();
     //add .format function
     String.prototype.format = function () {
         var args = [].slice.call(arguments);
@@ -95,22 +96,21 @@
 
 
     function pagination(per_page_num, current_page_num, button_text) {
-        console.log(per_page_num,current_page_num,button_text);
-        console.log(button_text==='chevron_right');
-        if (button_text === 'chevron_right') {
-            $('#left').removeClass('disabled');
-            if (current_page_num === 10 - 1) {
-                $('#right').addClass('disabled');
+        if ($.trim(button_text) === 'chevron_right') {
+            $('#left').show();
+            if (current_page_num === 9) { //max pages
+                $('#right').hide();
             }
             current_page++;
-        } else if (button_text === 'chevron_left') {
-            $('#right').removeClass('disabled');
-            if (current_page_num === 2 - 1) {
-                $('#left').addClass('disabled');
+        } else if ($.trim(button_text) === 'chevron_left') {
+            $('#right').show();
+            if (current_page_num === 2) {
+                $('#left').hide();
+
             }
             current_page--;
         }
-        $('#pagination').innerHTML = current_page;
+        $('#pagination').text(current_page);
         requestToServer(per_page, current_page);
     }
 
