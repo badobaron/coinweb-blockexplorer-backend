@@ -1,59 +1,77 @@
 {% extends 'template.html' %}
 
 {% block title %}
-<title>Bets :: Coinweb Block Explorer</title>
+    <title>Bets :: Coinweb Block Explorer</title>
 {% endblock %}
 
 {% block main %}
-<div class="container">
-    <div class="row center">
-        <div class="col s12">
-            <h1 class="header">Bets</h1>
+    <div class="container">
+        <div class="row">
+            {#<div class="input-field col s4 offset-s8">
+                <select>
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                </select>
+                <label>Choose bets per page</label>
+            </div>#}
         </div>
-        <!--Bets-->
-        <div class="col s12">
-            <ul class="collection with-header">
-                <li class="collection-header">
-                    <h5>
-                        <i class="material-icons left">storage</i>
-                        Bets
-                        <span class="badge">72,000 results</span>
+        <div class="row center">
+            <div class="col s12">
+                <h1 class="header">Bets</h1>
+            </div>
+            <!--Bets-->
+            <div class="input-field col s2 offset-s10">
+                <select>
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                </select>
+                <label>Bets per page</label>
+            </div>
+            <div class="col s12">
+                <ul class="collection with-header">
+                    <li class="collection-header">
+                        <h5>
+                            <i class="material-icons left">storage</i>
+                            Bets
+                            <span class="badge">72,000 results</span>
 
 
-                    </h5>
+                        </h5>
 
-                </li>
-                <li class="collection-item">
-                    <table class="highlight" id="bets">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Block</th>
-                            <th>Time</th>
-                            <th>Source</th>
-                            <th>Feed</th>
-                            <th>Fee</th>
-                        </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </li>
-                <li class="collection-item">
-                    <ul class="pagination center-align">
-                        <li class="waves-effect" id='left'><a href="#!"><i class="material-icons">chevron_left</i></a>
-                        </li>
-                        <li id="pagination">1</li>
-                        <li class="waves-effect" id='right'><a href="#!"><i class="material-icons">chevron_right</i></a>
-                        </li>
+                    </li>
+                    <li class="collection-item">
+                        <table class="highlight" id="bets">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Block</th>
+                                <th>Time</th>
+                                <th>Source</th>
+                                <th>Feed</th>
+                                <th>Fee</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </li>
+                    <li class="collection-item">
+                        <ul class="pagination center-align">
+                            <li class="disabled" id='left'><a href="#!"><i class="material-icons">chevron_left</i></a>
+                            </li>
+                            <li id="pagination">1</li>
+                            <li class="waves-effect" id='right'><a href="#!"><i class="material-icons">chevron_right</i></a>
+                            </li>
 
-                    </ul>
-            </ul>
-            </li>
-            </ul>
+                        </ul>
+                </ul>
+               {# </li>
+                </ul>#}
 
+            </div>
         </div>
     </div>
-</div>
 
 <script>
     $('#left').hide();
@@ -69,30 +87,40 @@
     var per_page = 10;
     var current_page = 1;
 
-    // document.getElementById("per_page").innerHTML = per_page;
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
 
-    function requestToServer(per_page, current_page) {
-        //request to the server
-        $.ajax({
-            url: '/betsAll',
-            type: 'POST',
-            contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify({per_page, 'offset': current_page * per_page - 10}, null, '\t'),
-            success: function (response) {
-                response = JSON.parse(response);
-                var default_string = "<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td>";
-                var my_table = $("#bets").find('tbody').empty();
-                // my_table[0]='<tbody></tbody>';
-                response.slice(0, per_page).forEach(function (bet, i, response) {
-                    my_table.append($('<tr>')
-                        .append(default_string.format(i + 1, bet['block_index'], '?', bet['source'], bet['feed_address'], (bet['fee_fraction_int'] / 1000000).toFixed(2) + '%'))
-                    );
-                });
-            }
-        })
-    }
+        // document.getElementById("per_page").innerHTML = per_page;
+        function requestToServer(per_page, current_page) {
+            //request to the server
+            $.ajax({
+                url: '/betsAll',
+                type: 'POST',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({per_page, 'offset': current_page * per_page - 10}, null, '\t'),
+                success: function (response) {
+                    response = JSON.parse(response);
+                    var default_string = "<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td>";
+                    var my_table = $("#bets").find('tbody').empty();
+                    // my_table[0]='<tbody></tbody>';
+                    response.slice(0, per_page).forEach(function (bet, i, response) {
+                        my_table.append($('<tr>')
+                            .append(default_string.format(i + 1, bet['block_index'], '?', bet['source'], bet['feed_address'], (bet['fee_fraction_int'] / 1000000).toFixed(2) + '%'))
+                        );
+                    });
+                }
+            })
+        }
 
-    requestToServer(per_page, current_page);
+        $('select').on('change', function () {
+            console.log($(this).val());
+            var per_this_page = parseInt($(this).val());
+            requestToServer(per_this_page, current_page);
+        });
+
+        requestToServer(per_page, current_page);
 
 
     function pagination(per_page_num, current_page_num, button_text) {
@@ -114,13 +142,13 @@
         requestToServer(per_page, current_page);
     }
 
-    $('#left').on('click', function () {
-        pagination(per_page, current_page, $('#left').text());
-    });
-    $('#right').on('click', function () {
-        pagination(per_page, current_page, $('#right').text())
-    });
 
-</script>
+        $('#left').on('click', function () {
+            pagination(per_page, current_page, $('#left').text());
+        });
+        $('#right').on('click', function () {
+            pagination(per_page, current_page, $('#right').text())
+        });
+    </script>
 
 {% endblock %}
